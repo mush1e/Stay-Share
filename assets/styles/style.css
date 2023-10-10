@@ -269,11 +269,17 @@ textarea {
     text-decoration: none;
 }
 
+.rentals h2 {
+    text-align: center;
+    color: darkgray;
+}
+
 .featured-rentals {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    justify-items: center;
+    grid-gap: 70px;
+    max-width: 400px; /* Set a maximum width for 2 columns per row */
+    margin: 0 auto; /* Center the grid horizontally */
+    justify-items: center; /* Center items within each grid cell */
 }
 
 .property {
@@ -283,9 +289,12 @@ textarea {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-color: white;
     transition: transform 0.2s;
+    width: 100%; /* Make all cards the same width */
+    padding: 20px;
     text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .property:hover {
@@ -360,4 +369,10 @@ textarea {
 .bottom-nav a:hover {
     color: var(--accent-color-primary);
     opacity: 90%;
+}
+
+@media (min-width: 800px) {
+    .featured-rentals {
+        grid-template-columns: repeat(2, 1fr); /* Two columns in each row on larger screens */
+    }
 }

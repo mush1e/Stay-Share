@@ -1,6 +1,6 @@
 <section class="rentals">
         <% rentals.forEach(function(r) { %>
-            <h3><%= r.cityProvince %></h3>
+            <h2><%= r.cityProvince %></h2>
             <section class="featured-rentals">
             <% r.rentals.forEach(function(rental) { %>
                 <%- include('partials/rental', {rental: rental}) %>
