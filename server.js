@@ -20,12 +20,15 @@ app.set('layout', 'layouts/main');
 app.use(express.static('assets'));
 app.use(expressLayouts);
 
+const models = require(path.join(__dirname + "/models/rentalList.js"));
+
+
 // Add your routes here
 // e.g. app.get() { ... }
 
-app.get('/', (req, res) => res.render("index"));
+app.get('/', (req, res) => res.render("home"));
 
-app.get('/rentals', (req, res) => res.render("underConstruction"));
+app.get('/rentals', (req, res) => res.render("rentals", { rentals: models.getRentalsByCityAndProvince() }));
 
 app.get('/sign-up', (req, res) => res.render("underConstruction"));
 

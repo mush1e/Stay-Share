@@ -269,43 +269,89 @@ textarea {
     text-decoration: none;
 }
 
+
+
 .featured-rentals {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    justify-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.featured-rentals {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .property {
-    border: 1px solid #ccc;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: calc(33.33% - 20px);
+    margin-right: 20px;
+    margin-bottom: 20px;
+    /* Add margin for spacing between rows */
+background-color: #fff;
+border: 1px solid #e0e0e0;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+transition: transform 0.2s;
+text-align: center;
+/* Center the content horizontally */
 }
 
-.property img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
+.property:last-child {
+    margin-right: 0;
+    /* Remove margin from the last property */
+}
+
+.property:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
 .property h3 {
-    font-size: 1.5rem;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
 }
 
 .property-details {
     display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
+    justify-content: space-between;
+    align-items: center;
+    /* Center the content vertically */
+    padding: 0 15px;
+    border-top: 1px solid #e0e0e0;
+    /* Add top border to separate details */
 }
 
 .property-card {
-    text-align: center;
+    flex: 1;
+    padding: 10px;
+    /* Add padding for spacing */
+}
+
+.property-card p {
+    color: #777;
+}
+
+.property-card strong {
+    color: #333;
 }
 
 .price-per-night {
+    margin-top: 15px;
     font-weight: bold;
-    color: #007bff;
+    color: black;
+}
+
+ .slideshow {
+    width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slideshow img {
+    width: 100%;
+    height: auto;
 }
 
 .social-icon svg:hover {
