@@ -277,9 +277,17 @@ textarea {
 .featured-rentals {
     display: grid;
     grid-gap: 70px;
-    max-width: 400px; /* Set a maximum width for 2 columns per row */
-    margin: 0 auto; /* Center the grid horizontally */
-    justify-items: center; /* Center items within each grid cell */
+    max-width: 600px; 
+    margin: 0 auto; 
+    justify-items: center; 
+}
+
+.featured-rentals-home {
+    display: grid;
+    grid-gap: 70px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin: 0 auto; 
+    justify-items: center; 
 }
 
 .property {
@@ -291,7 +299,7 @@ textarea {
     border-radius: 8px;
     border-color: white;
     transition: transform 0.2s;
-    width: 100%; /* Make all cards the same width */
+    width: 100%; 
     padding: 20px;
     text-align: center;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -349,6 +357,7 @@ textarea {
 
 .social-icon svg:hover {
     transform: translateY(-5px);
+    color: var(--text-color-secondary);
 }
 
 .construction {
@@ -371,8 +380,8 @@ textarea {
     opacity: 90%;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1000px) {
     .featured-rentals {
-        grid-template-columns: repeat(2, 1fr); /* Two columns in each row on larger screens */
+        grid-template-columns: repeat(2, 1fr); 
     }
 }
