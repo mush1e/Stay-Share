@@ -216,8 +216,21 @@ module.exports.getFeaturedRentals = () => {
 };
 
 module.exports.getRentalsByCityAndProvince = () => {
-  let filtered = [];
+  const groupedRentals = {};
 
+  rentals.forEach(rental => {
+    const cityProvince = `${rental.city}, ${rental.province}`;
+
+    if (!groupedRentals[cityProvince]) {
+      groupedRentals[cityProvince] = {
+        cityProvince: cityProvince,
+        rentals: []
+      };
+    }
+
+    groupedRentals[cityProvince].rentals.push(rental);
+  });
+
+  const result = Object.values(groupedRentals);
+  return result;
 };
-
-console.log(getRentalsByCityAndProvince().rentals[1]);
