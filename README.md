@@ -5,3 +5,6 @@ Using the MVC design pattern
 TechStack :-   
   HTML, TailWindCss with Daisy UI elements
   ExpressJS with EJS as a templating engine  
+
+LiveDemo:-
+    https://combative-jay-jersey.cyclic.app
