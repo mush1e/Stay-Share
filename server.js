@@ -20,7 +20,7 @@ app.set('layout', 'layouts/main');
 app.use(express.static('assets'));
 app.use(expressLayouts);
 
-const models = require(path.join(__dirname + "/models/rentalList.js"));
+const models = require(path.join(__dirname + "/models/rentals-db.js"));
 
 
 // Add your routes here
