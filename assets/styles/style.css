@@ -264,7 +264,8 @@ textarea {
 .featured-rentals {
     display: grid;
     grid-gap: 70px;
-    max-width: 600px; 
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    max-width: 900px;
     margin: 0 auto; 
     justify-items: center; 
 }
@@ -367,12 +368,6 @@ textarea {
 .bottom-nav a:hover {
     color: var(--accent-color-primary);
     opacity: 90%;
-}
-
-@media (min-width: 1000px) {
-    .featured-rentals {
-        grid-template-columns: repeat(2, 1fr); 
-    }
 }
 
 .valid-container {
