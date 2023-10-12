@@ -116,6 +116,7 @@ textarea {
 .nav-links a {
     text-decoration: none;
     color: var(--text-color-secondary);
+    transition: color 0.2s;
     font-weight: bold;
 }
 
@@ -362,6 +363,7 @@ textarea {
 .bottom-nav a {
     text-decoration: none;
     color: var(--text-color-secondary);
+    transition: color 0.2s;
     font-weight: bold;
 }
 
@@ -482,6 +484,7 @@ textarea {
         color: white;
         opacity: 60%;
         font-weight: bold;
+    transition: opacity 0.2s;
     }
     
     .nav-links a:hover {
