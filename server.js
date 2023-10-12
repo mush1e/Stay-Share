@@ -31,7 +31,7 @@ console.log(models.getFeaturedRentals());
 
 app.get('/rentals', (req, res) => res.render("rentals", { rentals: models.getRentalsByCityAndProvince() }));
 
-app.get('/sign-up', (req, res) => res.render("underConstruction"));
+app.get('/sign-up', (req, res) => res.render("register"));
 
 app.get('/log-in', (req, res) => res.render("log-in"));
 
