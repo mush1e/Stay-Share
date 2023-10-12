@@ -2,10 +2,29 @@
     <div class="logo">
         <a href="/"><img src="img/StayShare.png" alt="Logo"></a>
     </div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/rentals">Rentals</a></li>
         <li><a href="/log-in">Login</a></li>
         <li><a href="/sign-up">Register</a></li>
     </ul>
+    <div class="burger" id="burger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
 </div>
+
+<script>
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('nav-links');
+    const bars = document.querySelectorAll('.bar');
+
+    burger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        bars.forEach(bar => {
+                bar.classList.toggle('orange-bar');
+        });
+
+    });
+</script>
