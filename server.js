@@ -30,7 +30,7 @@ app.get('/', (req, res) => res.render("home", {rentals: models.getFeaturedRental
 
 app.get('/rentals', (req, res) => res.render("rentals", { rentals: models.getRentalsByCityAndProvince() }));
 
-app.get('/sign-up', (req, res) => res.render("register"));
+app.get('/sign-up', (req, res) => res.render("sign-up"));
 
 app.get('/log-in', (req, res) => res.render("log-in"));
 
