@@ -33,7 +33,7 @@ app.get('/rentals', (req, res) => res.render("rentals", { rentals: models.getRen
 
 app.get('/sign-up', (req, res) => res.render("underConstruction"));
 
-app.get('/log-in', (req, res) => res.render("underConstruction"));
+app.get('/log-in', (req, res) => res.render("log-in"));
 
 
 // *** DO NOT MODIFY THE LINES BELOW ***
