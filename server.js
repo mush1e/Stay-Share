@@ -27,7 +27,6 @@ const models = require(path.join(__dirname + "/models/rentalList.js"));
 // e.g. app.get() { ... }
 
 app.get('/', (req, res) => res.render("home", {rentals: models.getFeaturedRentals()}));
-console.log(models.getFeaturedRentals());
 
 app.get('/rentals', (req, res) => res.render("rentals", { rentals: models.getRentalsByCityAndProvince() }));
 

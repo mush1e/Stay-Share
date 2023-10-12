@@ -139,6 +139,7 @@ textarea {
 
 .hero {
     margin-top: 3%;
+    margin-bottom: 1%;
 }
 
 .hero-img {
@@ -181,7 +182,7 @@ textarea {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive three columns */
     grid-gap: 20px;
-    max-width: 800px; /* Adjust the max-width as needed */
+    max-width: 800px; 
     margin: 0 auto;
     justify-items: center;
 }
@@ -271,7 +272,7 @@ textarea {
 .featured-rentals-home {
     display: grid;
     grid-gap: 70px;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     margin: 0 auto; 
     justify-items: center; 
 }
@@ -483,7 +484,6 @@ textarea {
     }
     .nav-links a {
         text-decoration: none;
-        /* font-family: Jetbrains Mono; */
         color: white;
         opacity: 60%;
         font-weight: bold;
