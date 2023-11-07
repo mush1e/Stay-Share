@@ -37,15 +37,16 @@ app.get('/sign-up', (req, res) => res.render("sign-up"));
 app.get('/log-in', (req, res) => res.render("log-in"));
 
 app.post('/log-in', (req, res) => {
-    // const {email, password} = req.body;
-    const email = req.body.email;
-    const password = req.body.password;
+    const {email, password} = req.body;
     var err1, err2;
     if(!email) err1 = ("Please enter a valid email address");
     if(!password) err2 = ("Please enter a valid password");
-    res.render("log-in", {err1, err2});
+    if(err1 || err2) res.render("log-in", {email, password, err1, err2});
+    else res.render("log-in");
 
 });
+
+
 // *** DO NOT MODIFY THE LINES BELOW ***
 
 // This use() will not allow requests to go beyond it
