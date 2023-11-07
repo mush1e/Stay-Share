@@ -9,5 +9,5 @@ Student Email : msiddiqui48@myseneca.ca
 Course/Section: WEB322/NEE
 
 ## Project URLs
-GitHub Repo   : [https://github.com/web322-msiddiqui48/ ](https://github.com/mush1e/web322-msiddiqui48.git) 
+GitHub Repo   : [https://github.com/web322-msiddiqui48/ ](https://github.com/mush1e/web322-msiddiqui48.git)   
 Cyclic URL    : [https://stayshare.cyclic.app/](https://combative-jay-jersey.cyclic.app/)https://combative-jay-jersey.cyclic.app/
