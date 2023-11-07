@@ -509,3 +509,31 @@ textarea {
     color: red;
     opacity: 50%;
 }
+
+.content-welcome {
+    background-color: var(--background-color);
+    color: var(--text-color-secondary);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.accent-text {
+    color: var(--accent-color-primary);
+    font-family: 'Space Mono', monospace;
+}
+
+.sub-heading {
+    font-weight: bold;
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+}
+
+.bulleted-list {
+    list-style: disc;
+    margin-left: 20px;
+    font-family: 'Space Mono', monospace;
+    color: var(--text-color-secondary);
+}

@@ -42,11 +42,12 @@ app.get('/log-in', (req, res) => res.render("log-in"));
 app.get('/welcome', (req, res) => res.render("welcome"));
 
 app.post('/sign-up', (req, res) => {
+
     const {firstname, lastname, email, password} = req.body;
     const signupError = {};
     signupError.err = false;
 
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const emailRegex    = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
 
     if(!firstname) { signupError.fnameError = "Please enter a valid first name";             signupError.err = true;}
@@ -59,7 +60,7 @@ app.post('/sign-up', (req, res) => {
     if (signupError.err)  res.render("sign-up", {firstname, lastname, email, password, signupError})
     else {
         const msg = {
-            to: 'mustafa.ar.siddiqui@gmail.com', 
+            to: email, 
             from: 'mustafa.a.r.siddiqui@outlook.com',
             subject: 'Welcome to StayShare',
             text: `Dear ${firstname} ${lastname},\n\nWelcome to StayShare! We are thrilled to have you as a member of our community. Your journey with us has just begun, and we're excited to share it with you.\n\nThank you for registering with StayShare. Here's what you can expect as a member:\n- Access to exclusive content and features.\n- Stay updated with the latest news and updates.\n- Connect with like-minded individuals and share your experiences.\n\nIf you ever have any questions, feedback, or need assistance, feel free to reach out to our support team at msiddiqui48@myseneca.ca.\n\nOnce again, welcome to StayShare. We can't wait to see what you'll achieve with us!\n\nBest regards,\nMustafa Siddiqui\n[StayShare]\n`,
@@ -68,7 +69,6 @@ app.post('/sign-up', (req, res) => {
           sgMail
             .send(msg)
             .then(() => {
-              console.log('Email sent')
               res.redirect("welcome")
             })
             .catch((error) => {
@@ -78,6 +78,7 @@ app.post('/sign-up', (req, res) => {
 });
 
 app.post('/log-in', (req, res) => {
+
     const {email, password} = req.body;
     const loginError = {};
 
