@@ -12,8 +12,10 @@
 
 const path = require("path");
 const express = require("express");
+const sgMail = require('@sendgrid/mail');
 const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY); 
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -54,8 +56,25 @@ app.post('/sign-up', (req, res) => {
     if(!password) { signupError.passwordError = "Please enter a valid password";             signupError.err = true;}
     else if(!passwordRegex.test(password)) { signupError.passwordError = "Invalid password"; signupError.err = true;}
     
-    (signupError.err) ? res.render("sign-up", {firstname, lastname, email, password, signupError})
-                      : res.redirect("welcome");
+    if (signupError.err)  res.render("sign-up", {firstname, lastname, email, password, signupError})
+    else {
+        const msg = {
+            to: 'mustafa.ar.siddiqui@gmail.com', 
+            from: 'mustafa.a.r.siddiqui@outlook.com',
+            subject: 'Welcome to StayShare',
+            text: `Dear ${firstname} ${lastname},\n\nWelcome to StayShare! We are thrilled to have you as a member of our community. Your journey with us has just begun, and we're excited to share it with you.\n\nThank you for registering with StayShare. Here's what you can expect as a member:\n- Access to exclusive content and features.\n- Stay updated with the latest news and updates.\n- Connect with like-minded individuals and share your experiences.\n\nIf you ever have any questions, feedback, or need assistance, feel free to reach out to our support team at msiddiqui48@myseneca.ca.\n\nOnce again, welcome to StayShare. We can't wait to see what you'll achieve with us!\n\nBest regards,\nMustafa Siddiqui\n[StayShare]\n`,
+            html: `<p>Dear ${firstname} ${lastname},</p><p>Welcome to StayShare! We are thrilled to have you as a member of our community. Your journey with us has just begun, and we're excited to share it with you.</p><p>Thank you for registering with StayShare. Here's what you can expect as a member:</p><ul><li>Access to exclusive content and features.</li><li>Stay updated with the latest news and updates.</li><li>Connect with like-minded individuals and share your experiences.</li></ul><p>If you ever have any questions, feedback, or need assistance, feel free to reach out to our support team at <a href="mailto:msiddiqui48@myseneca.ca">msiddiqui48@myseneca.ca</a>.</p><p>Once again, welcome to StayShare. We can't wait to see what you'll achieve with us!</p><p>Best regards,<br>Mustafa Siddiqui<br>StayShare</p>`,
+        };
+          sgMail
+            .send(msg)
+            .then(() => {
+              console.log('Email sent')
+              res.redirect("welcome")
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+    } 
 });
 
 app.post('/log-in', (req, res) => {
