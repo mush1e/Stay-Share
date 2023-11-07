@@ -37,6 +37,8 @@ app.get('/sign-up', (req, res) => res.render("sign-up"));
 
 app.get('/log-in', (req, res) => res.render("log-in"));
 
+app.get('/welcome', (req, res) => res.render("welcome"));
+
 app.post('/sign-up', (req, res) => {
     const {firstname, lastname, email, password} = req.body;
     const signupError = {};
@@ -49,11 +51,11 @@ app.post('/sign-up', (req, res) => {
     if(!lastname) { signupError.lnameError = "Please enter a valid last name";               signupError.err = true;}
     if(!email) { signupError.emailError = "Please enter a valid email address";              signupError.err = true;}
     else if(!emailRegex.test(email)) { signupError.emailError = "Invalid email address.";    signupError.err = true;}
-    if(!password) { signupError.passwordError = "Please enter a valid password";        signupError.err = true;}
+    if(!password) { signupError.passwordError = "Please enter a valid password";             signupError.err = true;}
     else if(!passwordRegex.test(password)) { signupError.passwordError = "Invalid password"; signupError.err = true;}
     
     (signupError.err) ? res.render("sign-up", {firstname, lastname, email, password, signupError})
-                      : res.render("sign-up");
+                      : res.redirect("welcome");
 });
 
 app.post('/log-in', (req, res) => {
@@ -63,8 +65,7 @@ app.post('/log-in', (req, res) => {
     if(!email) loginError.emailError = "Please enter a valid email address";
     if(!password) loginError.passwordError = "Please enter a valid password";
     (loginError.emailError|| loginError.passwordError) ? res.render("log-in", {email, password, loginError})
-                                                         : res.render("log-in");
-
+                                                       : res.render("log-in");
 });
 
 
