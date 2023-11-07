@@ -504,3 +504,8 @@ textarea {
 .small {
     color: var(--text-color-secondary);
 }
+
+.input-container small {
+    color: red;
+    opacity: 50%;
+}

@@ -1,14 +1,18 @@
 <div class="valid-container">
     <h1 class="valid-title">Login</h1>
-    <form class="valid-form">
+    <form class="valid-form" action="/log-in" method="post">
         <div class="input-container">
             <label for="email" class="label">Email</label>
-            <input type="text" id="email" name="email" class="input" required>
+            <input type="text" id="email" name="email" class="input">
+            <small><%=typeof err1 !== 'undefined' ? err1 : ""%></small>
         </div>
         <div class="input-container">
             <label for="password" class="label">Password</label>
-            <input type="password" id="password" name="password" class="input" required>
+            <input type="password" id="password" name="password" class="input">
+            <small><%=typeof err2 !== 'undefined' ? err2 : ""%></small>
+
         </div>
+        <div id="loginError" class="error"></div>
         <button type="submit" class="valid-button">Login</button>
     </form>
 </div>

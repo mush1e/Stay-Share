@@ -12,6 +12,7 @@
 
 const path = require("path");
 const express = require("express");
+const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
@@ -19,6 +20,7 @@ app.set('view engine', 'ejs');
 app.set('layout', 'layouts/main');
 app.use(express.static('assets'));
 app.use(expressLayouts);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const models = require(path.join(__dirname + "/models/rentals-db.js"));
 
@@ -34,7 +36,16 @@ app.get('/sign-up', (req, res) => res.render("sign-up"));
 
 app.get('/log-in', (req, res) => res.render("log-in"));
 
+app.post('/log-in', (req, res) => {
+    // const {email, password} = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
+    var err1, err2;
+    if(!email) err1 = ("Please enter a valid email address");
+    if(!password) err2 = ("Please enter a valid password");
+    res.render("log-in", {err1, err2});
 
+});
 // *** DO NOT MODIFY THE LINES BELOW ***
 
 // This use() will not allow requests to go beyond it
