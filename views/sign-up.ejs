@@ -1,23 +1,25 @@
 <div class="register-container">
     <h1 class="valid-title">Register</h1>
-    <form class="valid-form" action="/register" method="post">
+    <form class="valid-form" action="/sign-up" method="post">
         <div class="input-container">
             <label for="firstname" class="label">First Name</label>
-            <input type="text" id="firstname" name="firstname" class="input" value="<%= typeof firstname !== 'undefined' ? firstname : '' %>" required>
+            <input type="text" id="firstname" name="firstname" class="input" value=<%= typeof firstname !== 'undefined' ? firstname : '' %>>
+            <small><%= typeof signupError !== 'undefined' ? signupError.fnameError : '' %></small>
         </div>
         <div class="input-container">
             <label for="lastname" class="label">Last Name</label>
-            <input type="text" id="lastname" name="lastname" class="input" value="<%= typeof lastname !== 'undefined' ? lastname : '' %>" required>
+            <input type="text" id="lastname" name="lastname" class="input" value=<%= typeof lastname !== 'undefined' ? lastname : '' %>>
+            <small><%= typeof signupError !== 'undefined' ? signupError.lnameError : '' %></small>
         </div>
         <div class="input-container">
             <label for="email" class="label">Email</label>
-            <input type="text" id="email" name="email" class="input" value="<%= typeof email !== 'undefined' ? email : '' %>" required>
-            <small><%= typeof emailError !== 'undefined' ? emailError : '' %></small>
+            <input type="text" id="email" name="email" class="input" value=<%= typeof email !== 'undefined' ? email : '' %>>
+            <small><%= typeof signupError !== 'undefined' ? signupError.emailError : '' %></small>
         </div>
         <div class="input-container">
             <label for="password" class="label">Password</label>
-            <input type="password" id="password" name="password" class="input" value="<%= typeof password !== 'undefined' ? password : '' %>" required>
-            <small><%= typeof passwordError !== 'undefined' ? passwordError : '' %></small>
+            <input type="password" id="password" name="password" class="input" value=<%= typeof password !== 'undefined' ? password : '' %>>
+            <small><%= typeof signupError !== 'undefined' ? signupError.passwordError : '' %></small>
         </div>
         <button type="submit" class="valid-button">Register</button>
     </form>
