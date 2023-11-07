@@ -1,10 +1,10 @@
-# StayShare
-A full stack CRUD application showing property rental listings
-Using the MVC design pattern 
+# WEB322 Project (Fall 2023)
+I declare that this assignment is my own work in accordance with the Seneca Academic Policy.  
+No part of this assignment has been copied manually or electronically from any other source(including web sites)   
+or distributed to other students.
+Student Name  : Mustafa Siddiqui  
+Student Email : msiddiqui48@myseneca.ca  
+Course/Section: WEB322/NEE  
 
-TechStack :-   
-  HTML, TailWindCss with Daisy UI elements
-  ExpressJS with EJS as a templating engine  
-
-LiveDemo:-
+LiveDemo:-  
     https://combative-jay-jersey.cyclic.app
