@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const models = require(path.join(__dirname + "/models/rentals-db.js"));
 
 
+
 // Add your routes here
 // e.g. app.get() { ... }
 
@@ -36,15 +37,25 @@ app.get('/sign-up', (req, res) => res.render("sign-up"));
 
 app.get('/log-in', (req, res) => res.render("log-in"));
 
-app.post('/log-in', (req, res) => {
-    const {email, password} = req.body;
-    var err1, err2;
-    if(!email) err1 = ("Please enter a valid email address");
-    if(!password) err2 = ("Please enter a valid password");
-    if(err1 || err2) res.render("log-in", {email, password, err1, err2});
-    else res.render("log-in");
+app.post('/sign-up', (req, res) => {
+    const {firstname, lastname, email, password} = req.body;
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
 
 });
+
+app.post('/log-in', (req, res) => {
+    const {email, password} = req.body;
+    const loginError = {};
+
+    if(!email) loginError.emailError = "Please enter a valid email address";
+    if(!password) loginError.passwordError = "Please enter a valid password";
+    (loginError.emailError|| loginError.passwordError) ? res.render("log-in", {email, password, loginError})
+                                                         : res.render("log-in");
+
+});
+
 
 
 // *** DO NOT MODIFY THE LINES BELOW ***

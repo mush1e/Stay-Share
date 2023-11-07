@@ -4,12 +4,12 @@
         <div class="input-container">
             <label for="email" class="label">Email</label>
             <input type="text" id="email" name="email" class="input" value=<%= typeof email !== 'undefined' ? email : '' %>>
-            <small><%= typeof err1 !== 'undefined' ? err1 : "" %></small>
+            <small><%= typeof loginError !== 'undefined' ? (loginError.emailError) : "" %></small>
         </div>
         <div class="input-container">
             <label for="password" class="label">Password</label>
             <input type="password" id="password" name="password" class="input" value=<%= typeof password !== 'undefined' ? password : '' %>>
-            <small><%= typeof err2 !== 'undefined' ? err2 : "" %></small>
+            <small><%= typeof loginError !== 'undefined' ? loginError.passwordError : "" %></small>
         </div>
         <div id="loginError" class="error"></div>
         <button type="submit" class="valid-button">Login</button>

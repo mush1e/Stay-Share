@@ -1,21 +1,23 @@
 <div class="register-container">
     <h1 class="valid-title">Register</h1>
-    <form class="valid-form">
+    <form class="valid-form" action="/register" method="post">
         <div class="input-container">
             <label for="firstname" class="label">First Name</label>
-            <input type="text" id="firstname" name="firstname" class="input" required>
+            <input type="text" id="firstname" name="firstname" class="input" value="<%= typeof firstname !== 'undefined' ? firstname : '' %>" required>
         </div>
         <div class="input-container">
             <label for="lastname" class="label">Last Name</label>
-            <input type="text" id="lastname" name="lastname" class="input" required>
+            <input type="text" id="lastname" name="lastname" class="input" value="<%= typeof lastname !== 'undefined' ? lastname : '' %>" required>
         </div>
         <div class="input-container">
             <label for="email" class="label">Email</label>
-            <input type="text" id="email" name="email" class="input" required>
+            <input type="text" id="email" name="email" class="input" value="<%= typeof email !== 'undefined' ? email : '' %>" required>
+            <small><%= typeof emailError !== 'undefined' ? emailError : '' %></small>
         </div>
         <div class="input-container">
             <label for="password" class="label">Password</label>
-            <input type="password" id="password" name="password" class="input" required>
+            <input type="password" id="password" name="password" class="input" value="<%= typeof password !== 'undefined' ? password : '' %>" required>
+            <small><%= typeof passwordError !== 'undefined' ? passwordError : '' %></small>
         </div>
         <button type="submit" class="valid-button">Register</button>
     </form>
