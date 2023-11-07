@@ -39,10 +39,21 @@ app.get('/log-in', (req, res) => res.render("log-in"));
 
 app.post('/sign-up', (req, res) => {
     const {firstname, lastname, email, password} = req.body;
+    const signupError = {};
+    signupError.err = false;
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
 
+    if(!firstname) { signupError.fnameError = "Please enter a valid first name";             signupError.err = true;}
+    if(!lastname) { signupError.lnameError = "Please enter a valid last name";               signupError.err = true;}
+    if(!email) { signupError.emailError = "Please enter a valid email address";              signupError.err = true;}
+    else if(!emailRegex.test(email)) { signupError.emailError = "Invalid email address.";    signupError.err = true;}
+    if(!password) { signupError.passwordErrorError = "Please enter a valid password";        signupError.err = true;}
+    else if(!passwordRegex.test(password)) { signupError.passwordError = "Invalid password"; signupError.err = true;}
+    
+    (signupError.err) ? res.render("sign-up", {email, password, loginError})
+                      : res.render("sign-up");
 });
 
 app.post('/log-in', (req, res) => {
