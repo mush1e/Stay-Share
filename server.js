@@ -12,6 +12,7 @@
 
 const path = require("path");
 const express = require("express");
+const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 
@@ -60,6 +61,13 @@ function onHttpStart() {
   console.log("Express http server listening on: " + HTTP_PORT);
 }
 
+
+// Check connection
+
 // Listen on port 8080. The default port for http is 80, https is 443. We use 8080 here
 // because sometimes port 80 is in use by other applications on the machine
-app.listen(HTTP_PORT, onHttpStart);
+mongoose.connect(process.env.DB_CONNECTION_URI).then(()=>{
+    app.listen(HTTP_PORT,onHttpStart);
+  }).catch(err=>{
+    console.log(err);
+  })
