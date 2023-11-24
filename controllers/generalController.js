@@ -2,13 +2,11 @@ const express = require('express');
 const router = express.Router();
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY); 
-const models = require("../models/rentals-db.js");
 
 
 
 router.get('/', (req, res) => res.render("home", {rentals: models.getFeaturedRentals()}));
 
-router.get('/rentals', (req, res) => res.render("rentals", { rentals: models.getRentalsByCityAndProvince() }));
 
 router.get('/sign-up', (req, res) => res.render("sign-up"));
 

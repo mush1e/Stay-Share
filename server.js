@@ -29,8 +29,10 @@ const models = require(path.join(__dirname + "/models/rentals-db.js"));
 // Add your routes here
 // e.g. app.get() { ... }
 const generalController = require("./controllers/generalController");
-app.use("/", generalController);
+const rentalsController = require("./controllers/rentalsController");
 
+app.use("/", generalController);
+app.use("/rentals/", rentalsController);
 // *** DO NOT MODIFY THE LINES BELOW ***
 
 // This use() will not allow requests to go beyond it
