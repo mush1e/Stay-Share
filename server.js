@@ -12,10 +12,8 @@
 
 const path = require("path");
 const express = require("express");
-const sgMail = require('@sendgrid/mail');
 const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY); 
 
 const app = express();
 app.set('view engine', 'ejs');
