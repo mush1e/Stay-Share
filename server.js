@@ -53,6 +53,13 @@ app.use(function(err, req, res, next) {
   res.status(500).send("Something broke!")
 });
 
+app.use((req, res, next) => {
+    // res.locals.user is a global EJS variable.
+    // This means that every single EJS file can access this variable.
+    res.locals.user = req.session.user;
+    next();
+});
+
 // Define a port to listen to requests on.
 const HTTP_PORT = process.env.PORT || 8080;
 
