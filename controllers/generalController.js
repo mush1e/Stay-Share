@@ -68,13 +68,43 @@ router.post('/sign-up', (req, res) => {
 
 router.post('/log-in', (req, res) => {
 
-    const {email, password} = req.body;
+    const {email, password, clerk, customer} = req.body;
     const loginError = {};
 
     if(!email) loginError.emailError = "Please enter a valid email address";
     if(!password) loginError.passwordError = "Please enter a valid password";
-    (loginError.emailError|| loginError.passwordError) ? res.render("log-in", {email, password, loginError})
-                                                       : res.render("log-in");
+    (loginError.emailError|| loginError.passwordError) ? res.render("log-in", {email, password, loginError}) : 0;
+    userModel.findOne({email})
+        .then(user => {
+                console.log(user);
+                if(user) {
+                    bcryptjs.compare(password, user.password)
+                        .then(isMatch => {
+                            if(isMatch) {
+                                if(clerk)
+                                    res.redirect("/");
+                                else
+                                    res.redirect("/");
+                            }
+                            else {
+                                loginError.passwordError = "Invalid credentials";
+                                res.render("log-in", {email, password, loginError})
+                            }
+                        }).catch(err => {
+                            loginError.passwordError = "Password could not be validated";
+                            console.log(err);
+                            res.render("log-in", {email, password, loginError})
+                        });
+                } else {
+                    loginError.emailError = "User not registered, recheck email";
+                    res.render("log-in", {email, password, loginError})
+                }
+            })
+            .catch(err => {
+                loginError.emailError = "error finding user in database"
+                console.log(err);
+                res.render("log-in", {email, password, loginError})
+            })
 });
 
 module.exports = router;

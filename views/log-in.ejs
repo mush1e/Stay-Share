@@ -11,6 +11,15 @@
             <input type="password" id="password" name="password" class="input" value=<%= typeof password !== 'undefined' ? password : '' %>>
             <small><%= typeof loginError !== 'undefined' ? loginError.passwordError : "" %></small>
         </div>
+        <label class="label">Role</label>
+            <div>
+                <input type="radio" id="dataEntryClerk" name="clerk" value="dataEntryClerk" checked>
+                <label for="dataEntryClerk">Data Entry Clerk</label>
+            </div>
+            <div>
+                <input type="radio" id="customer" name="customer" value="customer">
+                <label for="customer">Customer</label>
+            </div>
         <div id="loginError" class="error"></div>
         <button type="submit" class="valid-button">Login</button>
     </form>
