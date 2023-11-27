@@ -76,11 +76,11 @@ router.post('/log-in', (req, res) => {
     (loginError.emailError|| loginError.passwordError) ? res.render("log-in", {email, password, loginError}) : 0;
     userModel.findOne({email})
         .then(user => {
+                console.log(user);
                 if(user) {
                     bcryptjs.compare(password, user.password)
                         .then(isMatch => {
                             if(isMatch) {
-                                req.session.user = user;
                                 if(clerk)
                                     res.redirect("/");
                                 else
@@ -92,6 +92,7 @@ router.post('/log-in', (req, res) => {
                             }
                         }).catch(err => {
                             loginError.passwordError = "Password could not be validated";
+                            console.log(err);
                             res.render("log-in", {email, password, loginError})
                         });
                 } else {
@@ -100,7 +101,8 @@ router.post('/log-in', (req, res) => {
                 }
             })
             .catch(err => {
-                loginError.emailError = "error finding user in database";
+                loginError.emailError = "error finding user in database"
+                console.log(err);
                 res.render("log-in", {email, password, loginError})
             })
 });
