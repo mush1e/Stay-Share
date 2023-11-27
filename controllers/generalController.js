@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const sgMail = require('@sendgrid/mail');
+const bcryptjs = require("bcryptjs");
+const userModel = require("../models/userModel.js");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY); 
 
 const models = require("../models/rentals-db.js");
@@ -29,6 +31,21 @@ router.post('/sign-up', (req, res) => {
     else if(!emailRegex.test(email)) { signupError.emailError = "Invalid email address.";    signupError.err = true;}
     if(!password) { signupError.passwordError = "Please enter a valid password";             signupError.err = true;}
     else if(!passwordRegex.test(password)) { signupError.passwordError = "Invalid password"; signupError.err = true;}
+
+    const newUser = new userModel({
+        firstname,
+        lastname,
+        email,
+        password
+    });
+
+    newUser.save()
+        .then(userSaved => {
+            console.log(`User ${userSaved.firstname} has been added to the database.`);
+        }).catch(err => {
+            console.log(`Error adding user to the database ... ${err}`);
+            res.render("user/register");
+        });
     
     if (signupError.err)  res.render("sign-up", {firstname, lastname, email, password, signupError})
     else {
