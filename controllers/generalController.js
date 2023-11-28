@@ -7,9 +7,27 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const models = require("../models/rentals-db.js");
 
+function isLoggedIn(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        res.status(401).send("You are not authorized to view this page.");
+    }
+}
+
+function isCustomer(req, res, next) {
+    if (req.session.user && req.session.user.role === 'customer') {
+        next();
+    } else {
+        res.status(401).send("You are not authorized to view this page.");
+    }
+}
+
 router.get('/', (req, res) => res.render("home", {rentals: models.getFeaturedRentals()}));
 
-router.get('/cart', (req, res) => res.render("cart"));
+router.get('/cart', isLoggedIn, isCustomer, (req, res) => {
+    res.render('cart');
+});
 
 
 router.get('/sign-up', (req, res) => res.render("sign-up"));
@@ -87,10 +105,10 @@ router.post('/log-in', (req, res) => {
                                 res.locals.user = res.locals.user || {};
 
                                 if (role !== 'customer') {
-                                    res.locals.user.role = 'customer';
+                                    res.locals.user.role = 'clerk';
                                     res.redirect("/rentals/list");
                                 } else {
-                                    res.locals.user.role = 'clerk';
+                                    res.locals.user.role = 'customer';
                                     res.redirect("/cart");
                                 }
                                 
