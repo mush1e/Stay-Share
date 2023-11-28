@@ -14,6 +14,7 @@ const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
@@ -25,7 +26,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const models = require(path.join(__dirname + "/models/rentals-db.js"));
 
-
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
 
 // Add your routes here
 // e.g. app.get() { ... }

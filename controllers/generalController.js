@@ -76,11 +76,11 @@ router.post('/log-in', (req, res) => {
     (loginError.emailError|| loginError.passwordError) ? res.render("log-in", {email, password, loginError}) : 0;
     userModel.findOne({email})
         .then(user => {
-                console.log(user);
                 if(user) {
                     bcryptjs.compare(password, user.password)
                         .then(isMatch => {
                             if(isMatch) {
+                                req.session.user = user;
                                 if(clerk)
                                     res.redirect("/");
                                 else
