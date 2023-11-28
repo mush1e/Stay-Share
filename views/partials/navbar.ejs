@@ -3,15 +3,17 @@
         <a href="/"><img src="img/StayShare.png" alt="Logo"></a>
     </div>
     <ul class="nav-links" id="nav-links">
-        <% if (typeof user !== "undefined") { %>
-            <li><a><%=user.firstname%></a></li>
-            <li><a href="/">logout</a></li>
-            <%console.log(user.firstname)%>
-        <% } %>
         <li><a href="/">Home</a></li>
         <li><a href="/rentals">Rentals</a></li>
+        <% if (typeof user === "undefined") { %>
         <li><a href="/log-in">Login</a></li>
         <li><a href="/sign-up">Register</a></li>
+        <% } else { %>
+            <li><a><%=user.firstname%></a></li>
+            <li><a href="/">logout</a></li>
+        <% }; %>
+
+
     </ul>
     <div class="burger" id="burger">
         <div class="bar"></div>
