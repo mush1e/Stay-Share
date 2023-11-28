@@ -7,27 +7,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const models = require("../models/rentals-db.js");
 
-function isLoggedIn(req, res, next) {
-    if (req.session.user) {
-        next();
-    } else {
-        res.status(401).send("You are not authorized to view this page.");
-    }
-}
-
-function isCustomer(req, res, next) {
-    if (req.session.user && req.session.user.role === 'customer') {
-        next();
-    } else {
-        res.status(401).send("You are not authorized to view this page.");
-    }
-}
-
 router.get('/', (req, res) => res.render("home", {rentals: models.getFeaturedRentals()}));
-
-router.get('/cart', isLoggedIn, isCustomer, (req, res) => {
-    res.render('cart');
-});
 
 
 router.get('/sign-up', (req, res) => res.render("sign-up"));
@@ -101,14 +81,22 @@ router.post('/log-in', (req, res) => {
                     bcryptjs.compare(password, user.password)
                         .then(isMatch => {
                             if(isMatch) {
-                                req.session.user = user;
-                                res.locals.user = res.locals.user || {};
+                                req.session.user = {
+                                    _id: user._id,
+                                    firstname: user.firstname,
+                                    lastname: user.lastname,
+                                    email: user.email,
+                                    role: role !== 'customer' ? 'clerk' : 'customer'
+                                };
+                                res.locals.user = req.session.user;
 
                                 if (role !== 'customer') {
-                                    res.locals.user.role = 'clerk';
+                                    // res.locals.user.role = 'clerk';
+                                    // console.log(res.locals.user.role);
                                     res.redirect("/rentals/list");
                                 } else {
-                                    res.locals.user.role = 'customer';
+                                    // req.session.user.role = 'customer';
+                                    // console.log(res.locals.user.role);
                                     res.redirect("/cart");
                                 }
                                 
@@ -135,10 +123,18 @@ router.post('/log-in', (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-    // Clear the session from memory.
     req.session.destroy();
-
     res.redirect("/log-in");
+});
+
+
+
+router.get('/cart', (req, res) => {
+    if (req.session.user && req.session.user.role === 'customer') {
+        res.render('cart');
+    } else {
+        res.status(401).send("You are not authorized to view this page.");
+    }
 });
 
 module.exports = router;
