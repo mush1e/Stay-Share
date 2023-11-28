@@ -9,7 +9,7 @@
         <li><a href="/log-in">Login</a></li>
         <li><a href="/sign-up">Register</a></li>
         <% } else { %>
-            <li><a><%=user.firstname%></a></li>
+            <li><a href="<%= user.role === 'customer' ? '/cart' : '/rentals/list' %>"><%= user.firstname %></a></li>
             <li><a href="/logout">logout</a></li>
         <% }; %>
 

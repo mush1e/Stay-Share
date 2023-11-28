@@ -71,6 +71,7 @@ router.post('/sign-up', (req, res) => {
 router.post('/log-in', (req, res) => {
 
     const {email, password, role} = req.body;
+    res.locals.role = role;
     const loginError = {};
 
     if(!email) loginError.emailError = "Please enter a valid email address";
@@ -83,10 +84,16 @@ router.post('/log-in', (req, res) => {
                         .then(isMatch => {
                             if(isMatch) {
                                 req.session.user = user;
-                                if(role !== 'customer')
+                                res.locals.user = res.locals.user || {};
+
+                                if (role !== 'customer') {
+                                    res.locals.user.role = 'customer';
                                     res.redirect("/rentals/list");
-                                else
+                                } else {
+                                    res.locals.user.role = 'clerk';
                                     res.redirect("/cart");
+                                }
+                                
                             }
                             else {
                                 loginError.passwordError = "Invalid credentials";
