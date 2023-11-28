@@ -3,6 +3,11 @@
         <a href="/"><img src="img/StayShare.png" alt="Logo"></a>
     </div>
     <ul class="nav-links" id="nav-links">
+        <% if (typeof user !== "undefined") { %>
+            <li><a><%=user.firstname%></a></li>
+            <li><a href="/">logout</a></li>
+            <%console.log(user.firstname)%>
+        <% } %>
         <li><a href="/">Home</a></li>
         <li><a href="/rentals">Rentals</a></li>
         <li><a href="/log-in">Login</a></li>
