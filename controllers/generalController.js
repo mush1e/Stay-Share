@@ -9,6 +9,8 @@ const models = require("../models/rentals-db.js");
 
 router.get('/', (req, res) => res.render("home", {rentals: models.getFeaturedRentals()}));
 
+router.get('/cart', (req, res) => res.render("cart"));
+
 
 router.get('/sign-up', (req, res) => res.render("sign-up"));
 
@@ -82,9 +84,9 @@ router.post('/log-in', (req, res) => {
                             if(isMatch) {
                                 req.session.user = user;
                                 if(clerk)
-                                    res.redirect("/");
+                                    res.redirect("/rentals/list");
                                 else
-                                    res.redirect("/");
+                                    res.redirect("/cart");
                             }
                             else {
                                 loginError.passwordError = "Invalid credentials";
@@ -105,6 +107,13 @@ router.post('/log-in', (req, res) => {
                 console.log(err);
                 res.render("log-in", {email, password, loginError})
             })
+});
+
+router.get("/logout", (req, res) => {
+    // Clear the session from memory.
+    req.session.destroy();
+
+    res.redirect("/log-in");
 });
 
 module.exports = router;
