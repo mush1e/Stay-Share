@@ -68,7 +68,8 @@ router.post('/sign-up', (req, res) => {
 
 router.post('/log-in', (req, res) => {
 
-    const {email, password, clerk, customer} = req.body;
+    const {email, password, role} = req.body;
+    res.locals.role = role;
     const loginError = {};
 
     if(!email) loginError.emailError = "Please enter a valid email address";
@@ -76,15 +77,29 @@ router.post('/log-in', (req, res) => {
     (loginError.emailError|| loginError.passwordError) ? res.render("log-in", {email, password, loginError}) : 0;
     userModel.findOne({email})
         .then(user => {
-                console.log(user);
                 if(user) {
                     bcryptjs.compare(password, user.password)
                         .then(isMatch => {
                             if(isMatch) {
-                                if(clerk)
-                                    res.redirect("/");
-                                else
-                                    res.redirect("/");
+                                req.session.user = {
+                                    _id: user._id,
+                                    firstname: user.firstname,
+                                    lastname: user.lastname,
+                                    email: user.email,
+                                    role: role !== 'customer' ? 'clerk' : 'customer'
+                                };
+                                res.locals.user = req.session.user;
+
+                                if (role !== 'customer') {
+                                    // res.locals.user.role = 'clerk';
+                                    // console.log(res.locals.user.role);
+                                    res.redirect("/rentals/list");
+                                } else {
+                                    // req.session.user.role = 'customer';
+                                    // console.log(res.locals.user.role);
+                                    res.redirect("/cart");
+                                }
+                                
                             }
                             else {
                                 loginError.passwordError = "Invalid credentials";
@@ -105,6 +120,21 @@ router.post('/log-in', (req, res) => {
                 console.log(err);
                 res.render("log-in", {email, password, loginError})
             })
+});
+
+router.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/log-in");
+});
+
+
+
+router.get('/cart', (req, res) => {
+    if (req.session.user && req.session.user.role === 'customer') {
+        res.render('cart');
+    } else {
+        res.status(401).send("You are not authorized to view this page.");
+    }
 });
 
 module.exports = router;

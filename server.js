@@ -14,6 +14,7 @@ const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
@@ -25,7 +26,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const models = require(path.join(__dirname + "/models/rentals-db.js"));
 
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
 
+app.use((req, res, next) => {
+    // res.locals.user is a global EJS variable.
+    // This means that every single EJS file can access this variable.
+    res.locals.user = req.session.user;
+    next();
+});
 
 // Add your routes here
 // e.g. app.get() { ... }
@@ -53,12 +65,8 @@ app.use(function(err, req, res, next) {
   res.status(500).send("Something broke!")
 });
 
-app.use((req, res, next) => {
-    // res.locals.user is a global EJS variable.
-    // This means that every single EJS file can access this variable.
-    res.locals.user = req.session.user;
-    next();
-});
+
+
 
 // Define a port to listen to requests on.
 const HTTP_PORT = process.env.PORT || 8080;
