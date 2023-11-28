@@ -70,7 +70,7 @@ router.post('/sign-up', (req, res) => {
 
 router.post('/log-in', (req, res) => {
 
-    const {email, password, clerk, customer} = req.body;
+    const {email, password, role} = req.body;
     const loginError = {};
 
     if(!email) loginError.emailError = "Please enter a valid email address";
@@ -83,7 +83,7 @@ router.post('/log-in', (req, res) => {
                         .then(isMatch => {
                             if(isMatch) {
                                 req.session.user = user;
-                                if(clerk)
+                                if(role !== 'customer')
                                     res.redirect("/rentals/list");
                                 else
                                     res.redirect("/cart");
