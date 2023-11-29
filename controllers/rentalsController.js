@@ -7,7 +7,7 @@ router.get('/',  (req, res) => res.render("rentals", { rentals: models.getRental
 
 router.get('/list', (req, res) => {
     if (req.session.user && req.session.user.role === 'clerk') {
-        res.render('list');
+        res.render('rentals/list');
     } else {
         res.status(401).send("You are not authorized to view this page.");
     }

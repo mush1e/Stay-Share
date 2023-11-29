@@ -7,14 +7,14 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const models = require("../models/rentals-db.js");
 
-router.get('/', (req, res) => res.render("home", {rentals: models.getFeaturedRentals()}));
+router.get('/', (req, res) => res.render("general/home", {rentals: models.getFeaturedRentals()}));
 
 
-router.get('/sign-up', (req, res) => res.render("sign-up"));
+router.get('/sign-up', (req, res) => res.render("general/sign-up"));
 
-router.get('/log-in', (req, res) => res.render("log-in"));
+router.get('/log-in', (req, res) => res.render("general/log-in"));
 
-router.get('/welcome', (req, res) => res.render("welcome"));
+router.get('/welcome', (req, res) => res.render("general/welcome"));
 
 router.post('/sign-up', (req, res) => {
 
@@ -53,7 +53,7 @@ router.post('/sign-up', (req, res) => {
               sgMail
                 .send(msg)
                 .then(() => {
-                  res.redirect("welcome")
+                  res.redirect("general/welcome")
                 })
                 .catch((error) => {
                   console.error(error)
@@ -62,7 +62,7 @@ router.post('/sign-up', (req, res) => {
             console.log(`Error adding user to the database ... ${err}`);
             signupError.emailError = "User already exists...try a different email";    
             signupError.err = true;
-            res.render("sign-up", {firstname, lastname, email, password, signupError})
+            res.render("general/sign-up", {firstname, lastname, email, password, signupError})
         });
 });
 
@@ -74,7 +74,7 @@ router.post('/log-in', (req, res) => {
 
     if(!email) loginError.emailError = "Please enter a valid email address";
     if(!password) loginError.passwordError = "Please enter a valid password";
-    (loginError.emailError|| loginError.passwordError) ? res.render("log-in", {email, password, loginError}) : 0;
+    (loginError.emailError|| loginError.passwordError) ? res.render("general/log-in", {email, password, loginError}) : 0;
     userModel.findOne({email})
         .then(user => {
                 if(user) {
@@ -103,22 +103,22 @@ router.post('/log-in', (req, res) => {
                             }
                             else {
                                 loginError.passwordError = "Invalid credentials";
-                                res.render("log-in", {email, password, loginError})
+                                res.render("general/log-in", {email, password, loginError})
                             }
                         }).catch(err => {
                             loginError.passwordError = "Password could not be validated";
                             console.log(err);
-                            res.render("log-in", {email, password, loginError})
+                            res.render("general/log-in", {email, password, loginError})
                         });
                 } else {
                     loginError.emailError = "User not registered, recheck email";
-                    res.render("log-in", {email, password, loginError})
+                    res.render("general/log-in", {email, password, loginError})
                 }
             })
             .catch(err => {
                 loginError.emailError = "error finding user in database"
                 console.log(err);
-                res.render("log-in", {email, password, loginError})
+                res.render("general/log-in", {email, password, loginError})
             })
 });
 
@@ -131,7 +131,7 @@ router.get("/logout", (req, res) => {
 
 router.get('/cart', (req, res) => {
     if (req.session.user && req.session.user.role === 'customer') {
-        res.render('cart');
+        res.render('general/cart');
     } else {
         res.status(401).send("You are not authorized to view this page.");
     }

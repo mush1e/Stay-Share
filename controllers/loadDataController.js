@@ -126,7 +126,7 @@ router.get('/rentals', isDataClerk, async (req, res) => {
     res.status(200).json({ message: 'Rental data loaded successfully.' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).render({ message: 'Internal Server Error' });
   }
 });
 
