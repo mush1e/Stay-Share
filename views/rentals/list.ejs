@@ -4,3 +4,12 @@
     <p>Welcome to the list page <%=user.firstname%> <%=user.lastname%></p>
     <a href="../load-data/rentals">Add Sample Rental Data</a>
 </section>
+
+<section class="rentals">
+    <% console.log(rentals) %>
+    <% rentals.forEach(function(rental) { %>
+        <section class="featured-rentals">
+            <%- include('../partials/rental', {rental: rental}) %>
+        </section>
+    <%});%>
+</section>
