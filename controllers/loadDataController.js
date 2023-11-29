@@ -14,7 +14,7 @@ router.get('/rentals', isDataClerk, async (req, res) => {
   try {
     const existingRentals = await Rental.find();
     if (existingRentals.length > 0) {
-      return res.status(400).json({ message: 'Rentals already exist in the database.' });
+      return res.status(400).render('loadData/load-data', { message: 'Rentals already exist in the database.' });
     }
 
     const rentalsData = [
@@ -123,10 +123,10 @@ router.get('/rentals', isDataClerk, async (req, res) => {
 
     await Rental.insertMany(rentalsData);
 
-    res.status(200).json({ message: 'Rental data loaded successfully.' });
+    res.status(200).render('loadData/load-data', { message: 'Rental data loaded successfully.' });
   } catch (error) {
     console.error(error);
-    res.status(500).render({ message: 'Internal Server Error' });
+    res.status(500).render('loadData/load-data', { message: 'Internal Server Error' });
   }
 });
 
