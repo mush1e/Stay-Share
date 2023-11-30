@@ -27,7 +27,6 @@ router.get('/list', isClerk, (req, res) => {
         if (!rentals) {
             return res.status(404).send('No rentals found.');
         }
-        console.log(rentals);
         res.render('rentals/list', { rentals });
     })
     .catch(error => {
@@ -153,15 +152,16 @@ router.get('/add', isClerk, (req, res) => {
       if (!rental) {
         return res.status(404).send('Rental not found.');
       }
-      const imagePath = path.join(__dirname, '..', 'assets', 'img', rental.imageUrl);
+      const imagePath = path.join(__dirname, '..', 'assets', rental.imageUrl);
       await fs.unlink(imagePath);
-      await rental.remove();
+      await rental.deleteOne();
       res.redirect('/rentals/list');
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
     }
   });
+  
 
 
 module.exports = router
