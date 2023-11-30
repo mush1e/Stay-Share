@@ -1,5 +1,5 @@
 <section class="list-section">
-    <h1 class="header">Site Under Construction</h1>
+    <h1 class="header">Data Clerk List</h1>
     <hr>
     <p>Welcome to the list page <%=user.firstname%> <%=user.lastname%></p>
     <a href="../load-data/rentals">Add Sample Rental Data</a>
@@ -9,6 +9,11 @@
     <% rentals.forEach(function(rental) { %>
         <section class="featured-rentals-list">
             <%- include('../partials/rental', {rental: rental}) %>
+            <div class="CRUD-operations">
+                <button class="crud-button">add</button>
+                <button class="crud-button">update</button>
+                <button class="crud-button">delete</button>
+            </div>
         </section>
     <%});%>
 </section>

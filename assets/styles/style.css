@@ -445,6 +445,25 @@ textarea {
     opacity: 100%;
 }
 
+.crud-button {
+    padding: 10px 20px;
+    width: 20%;
+    background-color: var(--accent-color-primary);
+    opacity: 70%;
+    color: var(--text-color-primary);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    margin: 5% auto;
+}
+
+.crud-button:hover {
+    background-color: var(--accent-color-primary);
+    opacity: 100%;
+}
+
 .register-container {
     background: white;
     border: 1px solid white;
@@ -550,4 +569,8 @@ textarea {
 .list-section {
     color: var(--text-color-secondary);
     margin-bottom: 5%;
+}
+
+.CRUD-operations {
+    text-align: center;
 }
