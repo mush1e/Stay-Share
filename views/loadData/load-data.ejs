@@ -1,5 +1,14 @@
-<section class="construction">
+<section class="load-data-section">
     <h1 class="header"><%=user.firstname%> <%=user.lastname%></h1>
     <hr>
     <p><%=message%></p>
+    <div class="add-listing">
+        <button class="crud-button" id="go-back">Go back</button>
+    </div>
 </section>
+
+<script>
+    document.getElementById('go-back').addEventListener('click', function() {
+      window.location.href = '/rentals/list';
+    });
+</script>

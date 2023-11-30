@@ -368,7 +368,10 @@ textarea {
     color: var(--text-color-secondary);
     margin-bottom: 30%;
 }
-
+.load-data-section {
+    color: var(--text-color-secondary);
+    margin-bottom: 12%;
+}
 .header {
     color: black;
 }
@@ -593,3 +596,15 @@ textarea {
     justify-content: center;
     text-align: center;
 }
+
+.bottom-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .bottom-nav-links li {
+    margin-right: 10px; /* Adjust the spacing between links */
+  }
