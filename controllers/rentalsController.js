@@ -139,7 +139,7 @@ router.get('/add', isClerk, (req, res) => {
     }
   });
   
-  router.get('/remove/:id', async (req, res) => {
+  router.get('/remove/:id', isClerk, async (req, res) => {
     try {
       const rental = await Rental.findById(req.params.id);
       if (!rental) {
@@ -152,7 +152,7 @@ router.get('/add', isClerk, (req, res) => {
     }
   });
   
-  router.post('/remove/:id', async (req, res) => {
+  router.post('/remove/:id', isClerk, async (req, res) => {
     try {
       const rental = await Rental.findById(req.params.id);
       if (!rental) {
