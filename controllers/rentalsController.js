@@ -118,11 +118,11 @@ router.get('/add', isClerk, (req, res) => {
   
       if (req.files && req.files.imageUrl) {
         const imageUrl = req.files.imageUrl;
-        const uploadPath = path.join(__dirname, '..', 'public', 'uploads', imageUrl.name);
+        const uploadPath = path.join(__dirname, '..', 'assets', 'img', imageUrl.name)
   
         await imageUrl.mv(uploadPath);
   
-        rental.imageUrl = `/uploads/${imageUrl.name}`;
+        rental.imageUrl = `/img/${imageUrl.name}`;
       }
   
       await rental.save();
