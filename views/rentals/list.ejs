@@ -1,14 +1,14 @@
-<section class="construction">
+<section class="list-section">
     <h1 class="header">Site Under Construction</h1>
     <hr>
     <p>Welcome to the list page <%=user.firstname%> <%=user.lastname%></p>
     <a href="../load-data/rentals">Add Sample Rental Data</a>
 </section>
 
-<section class="rentals">
+<section class="rentals-list">
     <% console.log(rentals) %>
     <% rentals.forEach(function(rental) { %>
-        <section class="featured-rentals">
+        <section class="featured-rentals-list">
             <%- include('../partials/rental', {rental: rental}) %>
         </section>
     <%});%>
