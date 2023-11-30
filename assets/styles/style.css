@@ -271,6 +271,10 @@ textarea {
     justify-items: center; 
 }
 
+.remove-rentals {
+    justify-items: center; 
+}
+
 .rentals-list {
     display: grid;
     grid-gap: 70px;
@@ -583,4 +587,9 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.remove-container {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }

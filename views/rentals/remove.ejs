@@ -2,8 +2,12 @@
     <h1 class="header">Remove Rental</h1>
     <hr>
     <p>Are you sure you want to remove the following rental <%=user.firstname%> <%=user.lastname%>?</p>
-    <%- include('../partials/rental', {rental: rental}) %>
+    <section class="remove-rentals">
+        <%- include('../partials/rental', {rental: rental}) %>
+    </section>
     <form action="/rentals/remove/<%= rental._id %>" method="post">
-        <button type="submit">Confirm Removal</button>
+        <div class="add-listing">
+            <button class="crud-button"type="submit">Confirm Removal</button>
+        </div>
     </form>
 </section>
