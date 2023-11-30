@@ -11,7 +11,7 @@
             <%- include('../partials/rental', {rental: rental}) %>
             <div class="CRUD-operations">
                 <button class="crud-button" data-rental-id="<%= rental._id %>" onclick="redirectToEdit(this)">update</button>
-                <button class="crud-button">delete</button>
+                <button class="crud-button" onclick="redirectToRemove('<%= rental._id %>')">delete</button>
             </div>
         </section>
     <%});%>
@@ -26,7 +26,9 @@
         const rentalId = button.getAttribute('data-rental-id');
         window.location.href = `/rentals/edit/${rentalId}`;
     }
-
+    function redirectToRemove(rentalId) {
+        window.location.href = `/rentals/remove/${rentalId}`;
+    }
     document.getElementById('add-button').addEventListener('click', function() {
       window.location.href = '/rentals/add';
     });

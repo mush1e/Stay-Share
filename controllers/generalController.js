@@ -4,7 +4,7 @@ const sgMail = require('@sendgrid/mail');
 const bcryptjs = require("bcryptjs");
 const userModel = require("../models/userModel.js");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY); 
-
+const Rental = require("../models/rentalModel.js")
 const models = require("../models/rentals-db.js");
 
 router.get('/', (req, res) => res.render("general/home", {rentals: models.getFeaturedRentals()}));

@@ -40,7 +40,7 @@ router.get('/add', isClerk, (req, res) => {
     res.render('rentals/add');
   });
   
-  router.post('/add', (req, res) => {
+  router.post('/add', isClerk, (req, res) => {
   
     const {
       headline,
@@ -87,7 +87,7 @@ router.get('/add', isClerk, (req, res) => {
     });
   });
   
-  router.get('/edit/:id', async (req, res) => {
+  router.get('/edit/:id', isClerk, async (req, res) => {
     try {
       const rental = await Rental.findById(req.params.id);
       if (!rental) {
@@ -100,7 +100,7 @@ router.get('/add', isClerk, (req, res) => {
     }
   });
 
-  router.post('/edit/:id', async (req, res) => {
+  router.post('/edit/:id', isClerk, async (req, res) => {
     try {
       const rental = await Rental.findById(req.params.id);
       if (!rental) {
@@ -134,5 +134,35 @@ router.get('/add', isClerk, (req, res) => {
     }
   });
   
+  router.get('/remove/:id', async (req, res) => {
+    try {
+      const rental = await Rental.findById(req.params.id);
+      if (!rental) {
+        return res.status(404).send('Rental not found.');
+      }
+      res.render('rentals/remove', { rental });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+  router.post('/remove/:id', async (req, res) => {
+    try {
+      const rental = await Rental.findById(req.params.id);
+      if (!rental) {
+        return res.status(404).send('Rental not found.');
+      }
+      const imagePath = path.join(__dirname, '..', 'assets', 'img', rental.imageUrl);
+      await fs.unlink(imagePath);
+      await rental.remove();
+      res.redirect('/rentals/list');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
 
 module.exports = router
+
