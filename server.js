@@ -43,9 +43,11 @@ app.use((req, res, next) => {
 // e.g. app.get() { ... }
 const generalController = require("./controllers/generalController");
 const rentalsController = require("./controllers/rentalsController");
+const loadDataController = require("./controllers/loadDataController");
 
 app.use("/", generalController);
 app.use("/rentals/", rentalsController);
+app.use("/load-data/", loadDataController);
 // *** DO NOT MODIFY THE LINES BELOW ***
 
 // This use() will not allow requests to go beyond it

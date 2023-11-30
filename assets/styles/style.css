@@ -271,6 +271,15 @@ textarea {
     justify-items: center; 
 }
 
+.rentals-list {
+    display: grid;
+    grid-gap: 70px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    max-width: 900px;
+    margin: 0 auto; 
+    justify-items: center; 
+}
+
 .featured-rentals-home {
     display: grid;
     grid-gap: 70px;
@@ -536,4 +545,9 @@ textarea {
     margin-left: 20px;
     font-family: 'Space Mono', monospace;
     color: var(--text-color-secondary);
+}
+
+.list-section {
+    color: var(--text-color-secondary);
+    margin-bottom: 5%;
 }
