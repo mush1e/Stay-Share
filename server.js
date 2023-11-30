@@ -25,7 +25,6 @@ app.use(express.static('assets'));
 app.use(expressLayouts);
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const models = require(path.join(__dirname + "/models/rentals-db.js"));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,

@@ -5,9 +5,18 @@ const bcryptjs = require("bcryptjs");
 const userModel = require("../models/userModel.js");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY); 
 const Rental = require("../models/rentalModel.js")
-const models = require("../models/rentals-db.js");
 
-router.get('/', (req, res) => res.render("general/home", {rentals: models.getFeaturedRentals()}));
+
+router.get('/', async (req, res) => {
+  try {
+    const featuredRentals = await Rental.getFeaturedRentals();
+    res.render("general/home", { rentals: featuredRentals });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 router.get('/sign-up', (req, res) => res.render("general/sign-up"));

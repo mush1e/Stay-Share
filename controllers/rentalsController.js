@@ -3,7 +3,6 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs').promises;
 const fileUpload = require('express-fileupload');
-const models = require("../models/rentals-db.js");
 const Rental = require("../models/rentalModel.js");
 
 router.use(fileUpload());
@@ -15,10 +14,17 @@ const isClerk = (req, res, next) => {
       res.status(401).send('Unauthorized: Only clerks can access this resource.');
     }
   };
-  
-  
 
-router.get('/',  (req, res) => res.render("rentals", { rentals: models.getRentalsByCityAndProvince() }));
+
+  router.get('/', async (req, res) => {
+    try {
+      const rentalsByCityAndProvince = await Rental.getRentalsByCityAndProvince();
+      res.render("rentals", { rentals: rentalsByCityAndProvince });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
 
 router.get('/list', isClerk, (req, res) => {
     Rental.find()
