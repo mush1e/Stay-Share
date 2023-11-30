@@ -10,10 +10,19 @@
         <section class="featured-rentals-list">
             <%- include('../partials/rental', {rental: rental}) %>
             <div class="CRUD-operations">
-                <button class="crud-button">add</button>
                 <button class="crud-button">update</button>
                 <button class="crud-button">delete</button>
             </div>
         </section>
     <%});%>
 </section>
+<div class="add-listing">
+    <button class="crud-button" id="add-button">Add Listing</button>
+</div>
+
+
+<script>
+    document.getElementById('add-button').addEventListener('click', function() {
+      window.location.href = '/rentals/add';
+    });
+  </script>

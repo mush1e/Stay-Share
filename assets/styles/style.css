@@ -574,3 +574,13 @@ textarea {
 .CRUD-operations {
     text-align: center;
 }
+
+.check-box {
+    text-align: center;
+    margin-top: 2%;
+}
+.add-listing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
