@@ -1,5 +1,5 @@
 <section class="list-section">
-    <h1 class="header">Site Under Construction</h1>
+    <h1 class="header">Data Clerk List</h1>
     <hr>
     <p>Welcome to the list page <%=user.firstname%> <%=user.lastname%></p>
     <a href="../load-data/rentals">Add Sample Rental Data</a>
@@ -9,6 +9,27 @@
     <% rentals.forEach(function(rental) { %>
         <section class="featured-rentals-list">
             <%- include('../partials/rental', {rental: rental}) %>
+            <div class="CRUD-operations">
+                <button class="crud-button" data-rental-id="<%= rental._id %>" onclick="redirectToEdit(this)">update</button>
+                <button class="crud-button" onclick="redirectToRemove('<%= rental._id %>')">delete</button>
+            </div>
         </section>
     <%});%>
 </section>
+<div class="add-listing">
+    <button class="crud-button" id="add-button">Add Listing</button>
+</div>
+
+
+<script>
+    function redirectToEdit(button) {
+        const rentalId = button.getAttribute('data-rental-id');
+        window.location.href = `/rentals/edit/${rentalId}`;
+    }
+    function redirectToRemove(rentalId) {
+        window.location.href = `/rentals/remove/${rentalId}`;
+    }
+    document.getElementById('add-button').addEventListener('click', function() {
+      window.location.href = '/rentals/add';
+    });
+  </script>

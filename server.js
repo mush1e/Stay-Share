@@ -17,6 +17,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 
+
 const app = express();
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts/main');
@@ -24,7 +25,6 @@ app.use(express.static('assets'));
 app.use(expressLayouts);
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const models = require(path.join(__dirname + "/models/rentals-db.js"));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,

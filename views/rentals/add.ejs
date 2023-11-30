@@ -1,0 +1,56 @@
+<!-- views/rentals/add.ejs -->
+
+<div class="valid-container">
+    <h1 class="valid-title">Add Rental</h1>
+  
+    <form class="valid-form" action="/rentals/add" method="post" enctype="multipart/form-data">
+      <!-- Input fields for rental properties -->
+      <div class="input-container">
+        <label for="headline" class="label">Headline:</label>
+        <input type="text" name="headline" class="input" required>
+      </div>
+  
+      <div class="input-container">
+        <label for="numSleeps" class="label">Number of Sleeps:</label>
+        <input type="number" name="numSleeps" class="input" min="0" max="100" required>
+      </div>
+  
+      <div class="input-container">
+        <label for="numBedrooms" class="label">Number of Bedrooms:</label>
+        <input type="number" name="numBedrooms" class="input" min="0" max="100" required>
+      </div>
+  
+      <div class="input-container">
+        <label for="numBathrooms" class="label">Number of Bathrooms:</label>
+        <input type="number" name="numBathrooms" class="input" min="0" max="100" required>
+      </div>
+  
+      <div class="input-container">
+        <label for="pricePerNight" class="label">Price Per Night:</label>
+        <input type="number" name="pricePerNight" class="input" min="0.01" step="0.01" required>
+      </div>
+  
+      <div class="input-container">
+        <label for="city" class="label">City:</label>
+        <input type="text" name="city" class="input" required>
+      </div>
+  
+      <div class="input-container">
+        <label for="province" class="label">Province:</label>
+        <input type="text" name="province" class="input" required>
+      </div>
+  
+      <div>
+        <label for="imageUrl" class="label">Image Upload:</label>
+        <input type="file" name="imageUrl" accept="image/*" required>
+      </div>
+  
+      <div class="check-box">
+        <label for="featuredRental" class="label">Featured Rental:</label>
+        <input type="checkbox" name="featuredRental" class="input">
+      </div>
+  
+      <button type="submit" class="valid-button">Add Rental</button>
+    </form>
+  </div>
+  
