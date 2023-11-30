@@ -368,7 +368,10 @@ textarea {
     color: var(--text-color-secondary);
     margin-bottom: 30%;
 }
-
+.load-data-section {
+    color: var(--text-color-secondary);
+    margin-bottom: 12%;
+}
 .header {
     color: black;
 }
