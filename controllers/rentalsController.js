@@ -87,6 +87,52 @@ router.get('/add', isClerk, (req, res) => {
     });
   });
   
+  router.get('/edit/:id', async (req, res) => {
+    try {
+      const rental = await Rental.findById(req.params.id);
+      if (!rental) {
+        return res.status(404).send('Rental not found.');
+      }
+      res.render('rentals/edit', { rental });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
 
+  router.post('/edit/:id', async (req, res) => {
+    try {
+      const rental = await Rental.findById(req.params.id);
+      if (!rental) {
+        return res.status(404).send('Rental not found.');
+      }
+  
+      rental.headline = req.body.headline;
+      rental.numSleeps = req.body.numSleeps;
+      rental.numBedrooms = req.body.numBedrooms;
+      rental.numBathrooms = req.body.numBathrooms;
+      rental.pricePerNight = req.body.pricePerNight;
+      rental.city = req.body.city;
+      rental.province = req.body.province;
+      rental.featuredRental = req.body.featuredRental === 'on';
+  
+      if (req.files && req.files.imageUrl) {
+        const imageUrl = req.files.imageUrl;
+        const uploadPath = path.join(__dirname, '..', 'public', 'uploads', imageUrl.name);
+  
+        await imageUrl.mv(uploadPath);
+  
+        rental.imageUrl = `/uploads/${imageUrl.name}`;
+      }
+  
+      await rental.save();
+  
+      res.redirect('/rentals/list');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
 
 module.exports = router
