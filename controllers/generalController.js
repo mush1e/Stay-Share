@@ -40,7 +40,7 @@ router.post('/sign-up', (req, res) => {
     else if(!emailRegex.test(email)) { signupError.emailError = "Invalid email address.";    signupError.err = true;}
     if(!password) { signupError.passwordError = "Please enter a valid password";             signupError.err = true;}
     else if(!passwordRegex.test(password)) { signupError.passwordError = "Invalid password"; signupError.err = true;}
-    if (signupError.err)  res.render("sign-up", {firstname, lastname, email, password, signupError})
+    if (signupError.err)  res.render("general/sign-up", {firstname, lastname, email, password, signupError})
 
     const newUser = new userModel({
         firstname,
