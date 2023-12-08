@@ -16,7 +16,7 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
-
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -25,11 +25,21 @@ app.use(express.static('assets'));
 app.use(expressLayouts);
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const store = new MongoDBStore({
+  uri: process.env.DB_CONNECTION_URI,
+  collection: 'sessions',
+  expires: 1000 * 60 * 60 * 24 * 7, // 7 days
+});
 
 app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  store: store,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    secure: false, // Set to true in production if using HTTPS
+  },
 }));
 
 app.use((req, res, next) => {
