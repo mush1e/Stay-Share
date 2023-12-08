@@ -171,15 +171,16 @@ router.get('/add/:id', isCustomer ,async(req, res) => {
             days: 1, 
         });
     
-        res.render('general/cart', {rentals: cart});
-
     }
+    res.render('general/cart', {rentals: cart});
+
 })
 
 
 router.get('/cart', (req, res) => {
     if (req.session.user && req.session.user.role === 'customer') {
-        res.render('general/cart');
+        let cart = req.session.cart = req.session.cart || [];
+        res.render('general/cart', {rentals: cart} );
     } else {
         res.status(401).send("You are not authorized to view this page.");
     }

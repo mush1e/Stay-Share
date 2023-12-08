@@ -5,7 +5,7 @@
     <% if (typeof rentals !== 'undefined') { %>
         <% rentals.forEach(function(rental) { %>
             <section class="featured-rentals-list">
-                <%- include('../partials/rental', {rental: rental}) %>
+                <%- include('../partials/cartRental', {cartRental: rental}) %>
             </section>
         <% }); %>
     <% } %>
