@@ -271,6 +271,16 @@ textarea {
     justify-items: center; 
 }
 
+.featured-rentals-cart {
+    display: grid;
+    grid-gap: 70px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    max-width: 900px;
+    margin: 0 auto; 
+    padding-bottom: 2%;
+    justify-items: center; 
+}
+
 .remove-rentals {
     justify-items: center; 
 }
@@ -368,6 +378,11 @@ textarea {
     color: var(--text-color-secondary);
     margin-bottom: 30%;
 }
+.cart {
+    color: var(--text-color-secondary);
+    margin-bottom: 15%;
+}
+
 .load-data-section {
     color: var(--text-color-secondary);
     margin-bottom: 12%;
@@ -467,6 +482,24 @@ textarea {
 }
 
 .crud-button:hover {
+    background-color: var(--accent-color-primary);
+    opacity: 100%;
+}
+
+
+.crud-button-cart {
+    width: 40%;
+    background-color: var(--accent-color-primary);
+    opacity: 70%;
+    color: var(--text-color-primary);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.crud-button-cart:hover {
     background-color: var(--accent-color-primary);
     opacity: 100%;
 }
@@ -607,4 +640,16 @@ textarea {
   
   .bottom-nav-links li {
     margin-right: 10px; /* Adjust the spacing between links */
+  }
+
+  .cart-summary {
+    text-align: center;
+    padding: 5%;
+  }
+  .cart-summary p {
+    margin-bottom: 10px;
+  }
+  
+  .cart-summary button {
+    margin-top: 15px;
   }

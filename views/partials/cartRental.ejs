@@ -19,19 +19,3 @@
         </div>
     </div>
 </div>
-<div class="cart-controls">
-    <form action="/cart/update/<%= cartRental.id %>" method="post">
-        <label for="numNights">Number of Nights:</label>
-        <input type="number" name="numNights" value="<%= cartRental.days %>" min="1">
-        <button type="submit">Update</button>
-    </form>
-
-    <form action="/cart/remove/<%= cartRental.id %>" method="post">
-        <button type="submit">Remove from Cart</button>
-    </form>
-    </div>
-
-    <div>
-        <p>Total Price: <%= cartRental.pricePerNight * cartRental.days %></p>
-    </div>
-</div>
