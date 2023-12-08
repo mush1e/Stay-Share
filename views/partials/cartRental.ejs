@@ -19,17 +19,19 @@
         </div>
     </div>
 </div>
-    <!-- Add controls for adjusting the number of nights and removing from the cart -->
-    <div class="cart-controls">
+<div class="cart-controls">
+    <form action="/cart/update/<%= cartRental.id %>" method="post">
         <label for="numNights">Number of Nights:</label>
         <input type="number" name="numNights" value="<%= cartRental.days %>" min="1">
-        <!-- You can use JavaScript to update the cart on change -->
+        <button type="submit">Update</button>
+    </form>
 
-        <button class="remove-from-cart" onclick="removeFromCart('<%= cartRental.id %>')">Remove from Cart</button>
+    <form action="/cart/remove/<%= cartRental.id %>" method="post">
+        <button type="submit">Remove from Cart</button>
+    </form>
     </div>
 
     <div>
-        <p>Total Price</p>
-        <strong>C$<%= cartRental.pricePerNight * cartRental.days %></strong>
+        <p>Total Price: <%= cartRental.pricePerNight * cartRental.days %></p>
     </div>
 </div>

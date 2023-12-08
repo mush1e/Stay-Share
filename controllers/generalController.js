@@ -176,6 +176,42 @@ router.get('/add/:id', isCustomer ,async(req, res) => {
 
 })
 
+router.post('/cart/update/:id', async (req, res) => {
+    const numNights = req.body.numNights;
+    const rentalId = req.params.id;
+
+    const parsedNumNights = parseInt(numNights, 10);
+    if (!Number.isNaN(parsedNumNights) && parsedNumNights > 0) {
+        let cart = req.session.cart || [];
+
+        const index = cart.findIndex(cartRental => cartRental.id === rentalId);
+
+        if (index !== -1) {
+            cart[index].days = parsedNumNights;
+        }
+
+        req.session.cart = cart;
+
+        res.redirect('/cart');
+    } else {
+        res.status(400).send('Invalid number of nights.');
+    }
+});
+
+
+router.post('/cart/remove/:id', async (req, res) => {
+    const rentalId = req.params.id;
+    let cart = req.session.cart || [];
+    const index = cart.findIndex(cartRental => cartRental.id === rentalId);
+
+    if (index !== -1) {
+        cart.splice(index, 1);
+        req.session.cart = cart;
+    }
+
+    res.redirect('/cart');
+});
+
 
 router.get('/cart', (req, res) => {
     if (req.session.user && req.session.user.role === 'customer') {
