@@ -213,6 +213,81 @@ router.post('/cart/remove/:id', async (req, res) => {
 });
 
 
+const sendOrderConfirmationEmail = async (customerEmail, cart) => {
+    const orderDetails = generateOrderDetails(cart);
+  
+    const msg = {
+      to: customerEmail,
+      from: 'mustafa.a.r.siddiqui@outlook.com', 
+      subject: 'StayShare Order Confirmation',
+      html: orderDetails,
+    };
+  
+    try {
+      await sgMail.send(msg);
+      console.log('Order confirmation email sent successfully');
+    } catch (error) {
+      console.error('Error sending order confirmation email:', error.toString());
+    }
+  };
+
+const generateOrderDetails = (cart) => {
+    const subtotal = calculateSubtotal(cart);
+    const vat = calculateVAT(subtotal);
+    const grandTotal = subtotal + vat;
+  
+    return `
+      <html>
+        <body>
+          <h2>Order Summary</h2>
+          
+          ${cart.map(renderCartItem).join('')}
+          
+          <hr>
+          
+          <p>Subtotal: $${subtotal.toFixed(2)}</p>
+          <p>VAT (20%): $${vat.toFixed(2)}</p>
+          <p>Grand Total: $${grandTotal.toFixed(2)}</p>
+          
+        </body>
+      </html>
+    `;
+  };
+  
+  const renderCartItem = (cartRental) => {
+    return `
+      <div>
+        <h3>${cartRental.headline}</h3>
+        <p>City: ${cartRental.city}, Province: ${cartRental.province}</p>
+        <p>Number of Nights: ${cartRental.days}</p>
+        <p>Price Per Night: $${cartRental.pricePerNight.toFixed(2)}</p>
+        <p>Total Price: $${(cartRental.pricePerNight * cartRental.days).toFixed(2)}</p>
+        <!-- Add other rental details as needed -->
+      </div>
+      <hr>
+    `;
+  };
+  
+  const calculateSubtotal = (cart) => {
+    return cart.reduce((total, cartRental) => {
+      return total + cartRental.pricePerNight * cartRental.days;
+    }, 0);
+  };
+  
+  const calculateVAT = (subtotal) => {
+    return 0.2 * subtotal;
+  };
+  
+
+
+router.post('/cart/place-order',isCustomer ,async(req, res) => {
+    const customerEmail = req.session.user.email; 
+    const cart = req.session.cart || [];
+    await sendOrderConfirmationEmail(customerEmail, cart);
+    req.session.cart = [];
+    res.redirect('/cart');
+})
+
 router.get('/cart', (req, res) => {
     if (req.session.user && req.session.user.role === 'customer') {
         let cart = req.session.cart = req.session.cart || [];
