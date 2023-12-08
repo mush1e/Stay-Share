@@ -70,7 +70,7 @@ router.post('/sign-up', (req, res) => {
               sgMail
                 .send(msg)
                 .then(() => {
-                  res.redirect("general/welcome")
+                  res.redirect("/welcome")
                 })
                 .catch((error) => {
                   console.error(error)
