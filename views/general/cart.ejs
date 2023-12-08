@@ -1,5 +1,35 @@
-<section class="construction">
-    <h1 class="header">Site Under Construction</h1>
+<section class="cart">
+    <h1 class="header">Your rental cart</h1>
     <hr>
-    <p>Welcome to the cart <%=user.firstname%> <%=user.lastname%></p>
+    <p>Welcome to the cart <%= user.firstname %> <%= user.lastname %></p>
+    <% if (typeof rentals !== 'undefined') { %>
+        <% let subtotal = 0; %>
+        <% rentals.forEach(function (cartRental) { %>
+            <section class="featured-rentals-cart">
+                <%- include('../partials/cartRental', { cartRental }) %>
+                <div class="cart-controls">
+                    <form action="/cart/update/<%= cartRental.id %>" method="post">
+                        <label for="numNights">Number of Nights:</label>
+                        <input type="number" name="numNights" value="<%= cartRental.days %>" min="1">
+                        <div>
+                            <button class="crud-button-cart" type="submit">Update</button>
+                        </div>
+                    </form>
+                    <form action="/cart/remove/<%= cartRental.id %>" method="post">
+                        <button class="crud-button-cart" type="submit">Remove</button>
+                    </form>
+                    <p>Total Price: $<%= cartRental.pricePerNight * cartRental.days %></p>
+                </div>
+            </section>
+            <% subtotal += cartRental.pricePerNight * cartRental.days; %>
+        <% }); %>
+        <div class="cart-summary">
+            <p><strong>Subtotal:</strong> $<%= subtotal.toFixed(2) %></p>
+            <p><strong>VAT (20%):</strong> $<%= (subtotal * 0.20).toFixed(2) %></p>
+            <p><strong>Grand Total:</strong> $<%= (subtotal + subtotal * 0.20).toFixed(2) %></p>
+            <form action="/cart/place-order" method="post">
+                <button class="crud-button" type="submit">Place Order</button>
+            </form>
+        </div>
+    <% } %>
 </section>

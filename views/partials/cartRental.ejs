@@ -1,0 +1,21 @@
+<div class="property">
+    <div class="slideshow">
+        <img src="<%= cartRental.imageUrl %>" alt="<%= cartRental.headline %>">
+    </div>
+    <h3><%= cartRental.headline %></h3>
+    <div class="property-details">
+        <div class="property-card">
+            <p>City</p>
+            <strong><%= cartRental.city %></strong>
+        </div>
+        <div class="property-card">
+            <p>Province</p>
+            <strong><%= cartRental.province %></strong>
+        </div>
+
+        <div class="property-card">
+            <p>Price Per Night</p>
+            <strong>C$<%= cartRental.pricePerNight %></strong>
+        </div>
+    </div>
+</div>

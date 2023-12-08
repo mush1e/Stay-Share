@@ -6,6 +6,14 @@ const userModel = require("../models/userModel.js");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY); 
 const Rental = require("../models/rentalModel.js")
 
+const isCustomer = (req, res, next) => {
+    if (req.session.user && req.session.user.role === 'customer') {
+      next();
+    } else {
+      res.status(401).send('Unauthorized: Only clerks can access this resource.');
+    }
+  };
+
 
 router.get('/', async (req, res) => {
   try {
@@ -136,11 +144,154 @@ router.get("/logout", (req, res) => {
     res.redirect("/log-in");
 });
 
+router.get('/add/:id', isCustomer ,async(req, res) => {
+    let cart = req.session.cart = req.session.cart || [];
+    const rental = await Rental.findById(req.params.id);
+    let found = false;
 
+    cart.forEach(cartRental => {
+        if (cartRental.id == rental.id) {
+            found = true;
+            cartRental.days++;
+        }
+    });
+
+    if(!found) {
+        cart.push({
+            id: rental.id,
+            headline: rental.headline,
+            numSleeps: rental.numSleeps,
+            numBedrooms: rental.numBedrooms,
+            numBathrooms: rental.numBathrooms,
+            pricePerNight: rental.pricePerNight,
+            city: rental.city,
+            province: rental.province,
+            imageUrl: rental.imageUrl,
+            featuredRental: rental.featuredRental,
+            days: 1, 
+        });
+    
+    }
+    res.render('general/cart', {rentals: cart});
+
+})
+
+router.post('/cart/update/:id', async (req, res) => {
+    const numNights = req.body.numNights;
+    const rentalId = req.params.id;
+
+    const parsedNumNights = parseInt(numNights, 10);
+    if (!Number.isNaN(parsedNumNights) && parsedNumNights > 0) {
+        let cart = req.session.cart || [];
+
+        const index = cart.findIndex(cartRental => cartRental.id === rentalId);
+
+        if (index !== -1) {
+            cart[index].days = parsedNumNights;
+        }
+
+        req.session.cart = cart;
+
+        res.redirect('/cart');
+    } else {
+        res.status(400).send('Invalid number of nights.');
+    }
+});
+
+
+router.post('/cart/remove/:id', async (req, res) => {
+    const rentalId = req.params.id;
+    let cart = req.session.cart || [];
+    const index = cart.findIndex(cartRental => cartRental.id === rentalId);
+
+    if (index !== -1) {
+        cart.splice(index, 1);
+        req.session.cart = cart;
+    }
+
+    res.redirect('/cart');
+});
+
+
+const sendOrderConfirmationEmail = async (customerEmail, cart) => {
+    const orderDetails = generateOrderDetails(cart);
+  
+    const msg = {
+      to: customerEmail,
+      from: 'mustafa.a.r.siddiqui@outlook.com', 
+      subject: 'StayShare Order Confirmation',
+      html: orderDetails,
+    };
+  
+    try {
+      await sgMail.send(msg);
+      console.log('Order confirmation email sent successfully');
+    } catch (error) {
+      console.error('Error sending order confirmation email:', error.toString());
+    }
+  };
+
+const generateOrderDetails = (cart) => {
+    const subtotal = calculateSubtotal(cart);
+    const vat = calculateVAT(subtotal);
+    const grandTotal = subtotal + vat;
+  
+    return `
+      <html>
+        <body>
+          <h2>Order Summary</h2>
+          
+          ${cart.map(renderCartItem).join('')}
+          
+          <hr>
+          
+          <p>Subtotal: $${subtotal.toFixed(2)}</p>
+          <p>VAT (20%): $${vat.toFixed(2)}</p>
+          <p>Grand Total: $${grandTotal.toFixed(2)}</p>
+          
+        </body>
+      </html>
+    `;
+  };
+  
+  const renderCartItem = (cartRental) => {
+    return `
+      <div>
+        <h3>${cartRental.headline}</h3>
+        <p>City: ${cartRental.city}, Province: ${cartRental.province}</p>
+        <p>Number of Nights: ${cartRental.days}</p>
+        <p>Price Per Night: $${cartRental.pricePerNight.toFixed(2)}</p>
+        <p>Total Price: $${(cartRental.pricePerNight * cartRental.days).toFixed(2)}</p>
+        <!-- Add other rental details as needed -->
+      </div>
+      <hr>
+    `;
+  };
+  
+  const calculateSubtotal = (cart) => {
+    return cart.reduce((total, cartRental) => {
+      return total + cartRental.pricePerNight * cartRental.days;
+    }, 0);
+  };
+  
+  const calculateVAT = (subtotal) => {
+    return 0.2 * subtotal;
+  };
+  
+
+
+router.post('/cart/place-order',isCustomer ,async(req, res) => {
+    const customerEmail = req.session.user.email; 
+    const cart = req.session.cart || [];
+    await sendOrderConfirmationEmail(customerEmail, cart);
+    req.session.cart = [];
+    res.redirect('/cart');
+})
 
 router.get('/cart', (req, res) => {
     if (req.session.user && req.session.user.role === 'customer') {
-        res.render('general/cart');
+        let cart = req.session.cart = req.session.cart || [];
+        res.render('general/cart', {rentals: cart} );
     } else {
         res.status(401).send("You are not authorized to view this page.");
     }
