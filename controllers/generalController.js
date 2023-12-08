@@ -6,6 +6,14 @@ const userModel = require("../models/userModel.js");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY); 
 const Rental = require("../models/rentalModel.js")
 
+const isCustomer = (req, res, next) => {
+    if (req.session.user && req.session.user.role === 'customer') {
+      next();
+    } else {
+      res.status(401).send('Unauthorized: Only clerks can access this resource.');
+    }
+  };
+
 
 router.get('/', async (req, res) => {
   try {
@@ -136,6 +144,37 @@ router.get("/logout", (req, res) => {
     res.redirect("/log-in");
 });
 
+router.get('/add/:id', isCustomer ,async(req, res) => {
+    let cart = req.session.cart = req.session.cart || [];
+    const rental = await Rental.findById(req.params.id);
+    let found = false;
+
+    cart.forEach(cartRental => {
+        if (cartRental.id == rental.id) {
+            found = true;
+            cartRental.days++;
+        }
+    });
+
+    if(!found) {
+        cart.push({
+            id: rental.id,
+            headline: rental.headline,
+            numSleeps: rental.numSleeps,
+            numBedrooms: rental.numBedrooms,
+            numBathrooms: rental.numBathrooms,
+            pricePerNight: rental.pricePerNight,
+            city: rental.city,
+            province: rental.province,
+            imageUrl: rental.imageUrl,
+            featuredRental: rental.featuredRental,
+            days: 1, 
+        });
+    
+        res.render('general/cart', {rentals: cart});
+
+    }
+})
 
 
 router.get('/cart', (req, res) => {

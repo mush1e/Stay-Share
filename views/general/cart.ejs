@@ -1,5 +1,13 @@
 <section class="construction">
-    <h1 class="header">Site Under Construction</h1>
+    <h1 class="header">Your rental cart</h1>
     <hr>
     <p>Welcome to the cart <%=user.firstname%> <%=user.lastname%></p>
+    <% if (typeof rentals !== 'undefined') { %>
+        <% rentals.forEach(function(rental) { %>
+            <section class="featured-rentals-list">
+                <%- include('../partials/rental', {rental: rental}) %>
+            </section>
+        <% }); %>
+    <% } %>
+    
 </section>

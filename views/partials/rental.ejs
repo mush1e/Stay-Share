@@ -20,4 +20,12 @@
     <p>
     <p class="price-per-night">C$<%= rental.pricePerNight %> <small class="small">avg/night</small></p>
     </p>
+    <% if (typeof user !== 'undefined' && user.role === 'customer') { %>
+        <button class="valid-button" onclick="addToCart('<%= rental._id %>')">Rent</button>
+    <% } %>
 </div>
+<script>
+    function addToCart(rentalId) {
+        window.location.href = `/add/${rentalId}`;
+    }
+</script>
