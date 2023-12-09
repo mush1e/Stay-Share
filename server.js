@@ -17,6 +17,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const MongoDBStore = require('connect-mongodb-session')(session);
+require('dotenv').config();
 
 const app = express();
 app.set('view engine', 'ejs');
